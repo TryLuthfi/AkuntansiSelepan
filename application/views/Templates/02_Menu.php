@@ -162,23 +162,12 @@ $id_menu = $this->uri->segment('1');
                     </li>
                     <li class="nav-header">Report</li>
                     <li class="nav-item">
-                        <a href="<?= base_url('Laporan') ?>" class="nav-link <?php if ($id_menu == 'Laporan') {
-                                                                                    echo "active";
-                                                                                } ?>">
+                        <a href="<?= base_url('Neraca') ?>" class="nav-link <?php if ($id_menu == 'Neraca') {
+                                                                                echo "active";
+                                                                            } ?>">
                             <i class="nav-icon fas fa-file-invoice-dollar"></i>
                             <p>
-                                Laporan
-                                <!-- <span class="right badge badge-danger">New</span> -->
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="<?= base_url('LaporanHutang') ?>" class="nav-link <?php if ($id_menu == 'LaporanHutang') {
-                                                                                        echo "active";
-                                                                                    } ?>">
-                            <i class="nav-icon fas fa-file-invoice-dollar"></i>
-                            <p>
-                                Laporan Hutang
+                                Neraca
                                 <!-- <span class="right badge badge-danger">New</span> -->
                             </p>
                         </a>

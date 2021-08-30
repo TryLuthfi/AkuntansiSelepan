@@ -16,7 +16,7 @@ class Kodeakun extends CI_Controller
         $now = date('Y-m-d');
 
         $data['title'] = 'Kode Akun';
-        $data['judul'] = 'Kode Akun Hari Ini';
+        $data['judul'] = 'Kode Akun';
         $data['rincian'] = $this->MKodeakun->getData();
         $data['kode_akun'] = $this->db->get('tb_kode')->result_array();
 

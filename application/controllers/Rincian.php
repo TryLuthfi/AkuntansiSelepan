@@ -33,9 +33,20 @@ class Rincian extends CI_Controller
         // print_r($_POST);
         // echo ("</pre>");
 
+        $last_data = $this->db->query('SELECT id_rincian FROM tb_rincian order by id_rincian DESC LIMIT 1');
+        foreach ($last_data->result() as $row) {
+            $hasil_data =  $row->id_rincian;
+        }
+        $hasil_data = $hasil_data + 1;
+
+        $tanggal = $_POST['tanggal'];
+        $tanggal_baru = explode("-", $tanggal);
+        $kode_rincian = $tanggal_baru[2] . $tanggal_baru[1] . $tanggal_baru[0] . $hasil_data;
+
         $nominal = filter_var($_POST['nominal'], FILTER_SANITIZE_NUMBER_INT);
 
         $hasil_data = array(
+            'kode_rincian' => $kode_rincian,
             'tanggal_rincian' => $_POST['tanggal'],
             'debit_rincian' => $_POST['debit'],
             'keterangan_rincian' => $_POST['nama_barang'],
