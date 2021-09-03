@@ -130,7 +130,7 @@
                                 </div>
                                 <div class="form-group" id="keterangan">
                                     <label class="col-form-label">Keterangan</label>
-                                    <input type="text" class="form-control" name="nama_barang" autocomplete="off" placeholder="Keterangan...">
+                                    <input type="text" class="form-control" name="keterangan_1" autocomplete="off" placeholder="Keterangan...">
                                 </div>
 
                                 <div class="form-group">
@@ -161,15 +161,15 @@
 
                                     <button type="submit" name="btnSubmit" class="btn btn-primary"><i class="fa fa-spinner fa-spin loading" style="display:none"></i> Simpan</button>
                                     <? $asu = 0; ?>
-                                    <button id="nyoba" type="button" onclick="addCode(this.value)" value=1> TAMBAH FORM </button>
+                                    <button id="nyoba" type="button" onclick="addCode(this.value)" value="2"> TAMBAH FORM </button>
                                     <script>
                                         // var baru = $('nyoba').val();
 
                                         function addCode(val) {
 
                                             document.getElementById("keterangan").innerHTML +=
-                                                "<div class='form-group'> <label class='col-form-label'>Tambahan " + val + "</label>  <input type='text' class='form-control' name='" + val + "' autocomplete='off' placeholder='Keterangan'> </div> ";
-                                            result = document.getElementById('nyoba');
+                                                "<div class='form-group'> <label class='col-form-label'>Tambahan " + val + "</label>  <input type='text' class='form-control' name='keterangan_" + val + "' autocomplete='off' placeholder='Keterangan'> </div> ";
+                                            const result = document.getElementById('nyoba');
                                             result.value = result.value ? parseInt(result.value) + 1 : parseInt(val);
                                             // for (i = baru; i <= baru; i++) {
                                             //     if (i < baru) {
@@ -300,12 +300,12 @@
         })
 
         // notifikasi allert sukses atau tidak
-        <?php if ($status == 'sukses') { ?>
-            swal("Success!", "Berhasil menambah data rincian!", "success");
-        <?php } else if ($status == 'gagal') { ?>
-            swal("Gagal!", "Gagal menambah data rincian!", "warning");
-        <?php } else { ?>
-        <?php } ?>
+        // <?php if ($status == 'sukses') { ?>
+        //     swal("Success!", "Berhasil menambah data rincian!", "success");
+        // <?php } else if ($status == 'gagal') { ?>
+        //     swal("Gagal!", "Gagal menambah data rincian!", "warning");
+        // <?php } else { ?>
+        // <?php } ?>
 
     });
 </script>

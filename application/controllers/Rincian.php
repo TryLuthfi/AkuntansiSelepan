@@ -29,42 +29,44 @@ class Rincian extends CI_Controller
 
     public function add()
     {
-        echo ("<pre>");
-        print_r(array_filter($_POST, function ($value) {
-            return $value !== '';
-        }));
-        echo ("</pre>");
+        $anyket = array_filter($_POST, function ($value) {
+            return (strpos($value, 'keterangan_') !== false);
+        }, ARRAY_FILTER_USE_KEY);
 
-        // $last_data = $this->db->query('SELECT id_rincian FROM tb_rincian order by id_rincian DESC LIMIT 1');
-        // foreach ($last_data->result() as $row) {
-        //     $hasil_data =  $row->id_rincian;
-        // }
-        // $hasil_data = $hasil_data + 1;
+        $anyket = join(',', $anyket);
 
-        // $tanggal = $_POST['tanggal'];
-        // $tanggal_baru = explode("-", $tanggal);
-        // $kode_rincian = $tanggal_baru[2] . $tanggal_baru[1] . $tanggal_baru[0] . $hasil_data;
+        $last_data = $this->db->query('SELECT id_rincian FROM tb_rincian order by id_rincian DESC LIMIT 1');
 
-        // $nominal = filter_var($_POST['nominal'], FILTER_SANITIZE_NUMBER_INT);
+        foreach ($last_data->result() as $row) {
+            $hasil_data =  $row->id_rincian;
+        }
 
-        // $hasil_data = array(
-        //     'kode_rincian' => $kode_rincian,
-        //     'tanggal_rincian' => $_POST['tanggal'],
-        //     'debit_rincian' => $_POST['debit'],
-        //     'keterangan_rincian' => $_POST['nama_barang'],
-        //     'nominal_rincian' => $nominal,
-        //     'kredit_rincian' => $_POST['kredit']
-        // );
+        $hasil_data = $hasil_data + 1;
 
-        // $res = $this->MRincian->addPengeluaran($hasil_data);
+        $tanggal = $_POST['tanggal'];
+        $tanggal_baru = explode("-", $tanggal);
+        $kode_rincian = $tanggal_baru[2] . $tanggal_baru[1] . $tanggal_baru[0] . $hasil_data;
 
-        // if ($res >= 1) {
-        //     $this->session->set_flashdata('status', 'sukses');
-        //     redirect("Rincian");
-        // } else {
-        //     $this->session->set_flashdata('status', 'gagal');
-        //     redirect("Rincian");
-        // }
+        $nominal = filter_var($_POST['nominal'], FILTER_SANITIZE_NUMBER_INT);
+
+        $hasil_data = array(
+            'kode_rincian' => $kode_rincian,
+            'tanggal_rincian' => $_POST['tanggal'],
+            'debit_rincian' => $_POST['debit'],
+            'keterangan_rincian' => $anyket,
+            'nominal_rincian' => $nominal,
+            'kredit_rincian' => $_POST['kredit']
+        );
+
+        $res = $this->MRincian->addPengeluaran($hasil_data);
+
+        if ($res >= 1) {
+            $this->session->set_flashdata('status', 'sukses');
+            redirect("Rincian");
+        } else {
+            $this->session->set_flashdata('status', 'gagal');
+            redirect("Rincian");
+        }
     }
 
     public function edit()
