@@ -116,9 +116,9 @@
 
             <!-- modal untuk edit data -->
             <?php $tgl = date('Y-m-d'); ?>
-            <form action="<?php echo site_url('Kodeakun/edit'); ?>" method="post">
-                <?php $no = 0;
-                foreach ($rincian as $data) : $no++; ?>
+            <?php foreach ($rincian as $data) :
+            ?>
+                <form action="<?php echo site_url('Kodeakun/edit'); ?>" method="post">
                     <div class="modal fade" id="modal-lg-edit<?= $data['id_kode'] ?>">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
@@ -146,8 +146,8 @@
                             </div>
                         </div>
                     </div>
-                <?php endforeach; ?>
-            </form>
+                </form>
+            <?php endforeach; ?>
 
 
 

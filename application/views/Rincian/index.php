@@ -89,7 +89,7 @@
                                             <td>Rp. <?= number_format($data['nominal_rincian'], 0, ',', ',') ?></td>
                                             <td>
                                                 <a href="<?php echo base_url('Rincian/delete/') . $data['id_rincian'] ?>" class="btn btn-danger remove"><i class=" fas fa-trash"></i></a>
-                                                <a href="#" class="btn btn-warning" data-target="#modal-lg-edit<?= $data['id_rincian'] ?>" data-toggle="modal"><i class="fas fa-edit"></i></a>
+                                                <a href="#" class="btn btn-warning" data-target="#modal-lg-edit<?php echo $data['id_rincian'] ?>" data-toggle="modal"><i class="fas fa-edit"></i></a>
                                             </td>
                                         </tr>
                                         <?php $total = $total + $data['nominal_rincian']; ?>
@@ -128,10 +128,11 @@
                                     <label class="col-form-label">Tanggal :</label>
                                     <input type="date" value="<?php echo  $tgl ?>" class="form-control text-dark" name="tanggal" id="tgl1">
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="keterangan">
                                     <label class="col-form-label">Keterangan</label>
                                     <input type="text" class="form-control" name="nama_barang" autocomplete="off" placeholder="Keterangan...">
                                 </div>
+
                                 <div class="form-group">
                                     <label class="col-form-label">Kode Akun (D)</label>
                                     <select name="debit" id="debit" class="form-control">
@@ -159,6 +160,28 @@
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
 
                                     <button type="submit" name="btnSubmit" class="btn btn-primary"><i class="fa fa-spinner fa-spin loading" style="display:none"></i> Simpan</button>
+                                    <? $asu = 0; ?>
+                                    <button id="nyoba" type="button" onclick="addCode(this.value)" value=1> TAMBAH FORM </button>
+                                    <script>
+                                        // var baru = $('nyoba').val();
+
+                                        function addCode(val) {
+
+                                            document.getElementById("keterangan").innerHTML +=
+                                                "<div class='form-group'> <label class='col-form-label'>Tambahan " + val + "</label>  <input type='text' class='form-control' name='" + val + "' autocomplete='off' placeholder='Keterangan'> </div> ";
+                                            result = document.getElementById('nyoba');
+                                            result.value = result.value ? parseInt(result.value) + 1 : parseInt(val);
+                                            // for (i = baru; i <= baru; i++) {
+                                            //     if (i < baru) {
+                                            //         document.getElementById("keterangan").innerHTML +=
+                                            //             "<div class='form-group'> <label class='col-form-label'>baru</label>  <input type='text' class='form-control' name='nama_barang' autocomplete='off' placeholder='Keterangan'> </div> ";
+                                            //     } else {
+                                            //         document.getElementById("keterangan").innerHTML +=
+                                            //             "<div class='form-group'> <label class='col-form-label'>lama</label>  <input type='text' class='form-control' name='" + i + "' autocomplete='off' placeholder='Keterangan'> </div> ";
+                                            //     }
+                                            // }
+                                        }
+                                    </script>
                                 </div>
                             </div>
                         </div>
@@ -170,11 +193,11 @@
 
             <!-- modal untuk edit data -->
             <?php $tgl = date('Y-m-d'); ?>
-            <form action="<?php echo base_url('Rincian/edit'); ?>" method="post">
-                <?php $no = 0;
-                foreach ($rincian as $data) : $no++; ?>
-                    <?php $isi_debit_edit = $data['debit_rincian'] ?>
-                    <div class="modal fade" id="modal-lg-edit<?= $data['id_rincian'] ?>">
+            <?php foreach ($rincian as $data) :
+            ?>
+
+                <form action="<?php echo base_url('Rincian/edit'); ?>" method="post">
+                    <div class="modal fade" id="modal-lg-edit<?= $data['id_rincian'] ?>" tabindex="-1">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -228,8 +251,10 @@
                             </div>
                         </div>
                     </div>
-                <?php endforeach; ?>
-            </form>
+                </form>
+            <?php endforeach; ?>
+
+
 
             <!-- COBA PANGGIL DATA MSQL -->
             <div class="row">

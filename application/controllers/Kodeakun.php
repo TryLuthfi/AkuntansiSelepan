@@ -60,26 +60,23 @@ class Kodeakun extends CI_Controller
 
     public function edit()
     {
-        echo ("<pre>");
-        print_r($_POST);
-        echo ("</pre>");
 
-        // $data_array = array(
-        //     'kode_akun' => $_POST['kode_akun'],
-        //     'nama_kode' => $_POST['nama_kode']
-        // );
+        $data_array = array(
+            'kode_akun' => $_POST['kode_akun'],
+            'nama_kode' => $_POST['nama_kode']
+        );
 
-        // $where = array('kode_akun' => $_POST['kode_akun']);
+        $where = array('kode_akun' => $_POST['kode_akun']);
 
-        // $res = $this->MKodeakun->updateData($data_array, $where);
+        $res = $this->MKodeakun->updateData($data_array, $where);
 
-        // if ($res >= 1) {
-        //     $this->session->set_flashdata('status', 'sukses');
-        //     redirect("Kodeakun");
-        // } else {
-        //     $this->session->set_flashdata('status', 'gagal');
-        //     redirect("Kodeakun");
-        // }
+        if ($res >= 1) {
+            $this->session->set_flashdata('status', 'sukses');
+            redirect("Kodeakun");
+        } else {
+            $this->session->set_flashdata('status', 'gagal');
+            redirect("Kodeakun");
+        }
     }
 
     public function delete($id)

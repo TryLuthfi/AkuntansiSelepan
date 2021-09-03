@@ -13,6 +13,13 @@ class MNeraca extends CI_Model
         return $kas;
     }
 
+    public function getNama()
+    {
+        $now = date("Y-m-d");
+        $nama = $this->db->query("select * from piutang")->result_array();
+        return $nama;
+    }
+
     public function getPiutangGaji()
     {
         $now = date('Y-m-d');
