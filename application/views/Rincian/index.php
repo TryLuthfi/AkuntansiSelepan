@@ -128,11 +128,13 @@
                                     <label class="col-form-label">Tanggal :</label>
                                     <input type="date" value="<?php echo  $tgl ?>" class="form-control text-dark" name="tanggal" id="tgl1">
                                 </div>
-                                <div class="form-group" id="keterangan">
+                                <div class="form-group">
                                     <label class="col-form-label">Keterangan</label>
                                     <input type="text" class="form-control" name="keterangan_1" autocomplete="off" placeholder="Keterangan...">
                                 </div>
+                                <div id="keterangan">
 
+                                </div>
                                 <div class="form-group">
                                     <label class="col-form-label">Kode Akun (D)</label>
                                     <select name="debit" id="debit" class="form-control">
@@ -146,6 +148,9 @@
                                 <div class="form-group">
                                     <label class="col-form-label">Nominal</label>
                                     <input type="text" class="form-control" name="nominal" data-inputmask="'alias': 'currency' " data-mask>
+                                </div>
+                                <div id="nominal">
+
                                 </div>
                                 <div class="form-group">
                                     <label class="col-form-label">Kode Akun (K)</label>
@@ -162,6 +167,7 @@
                                     <button type="submit" name="btnSubmit" class="btn btn-primary"><i class="fa fa-spinner fa-spin loading" style="display:none"></i> Simpan</button>
                                     <? $asu = 0; ?>
                                     <button id="nyoba" type="button" onclick="addCode(this.value)" value="2"> TAMBAH FORM </button>
+                                    <!-- <button id="tambah" type="button" onclick="addNominal(this.value)" value="2">TAMBAH NOMINAL</button> -->
                                     <script>
                                         // var baru = $('nyoba').val();
 
@@ -169,8 +175,32 @@
 
                                             document.getElementById("keterangan").innerHTML +=
                                                 "<div class='form-group'> <label class='col-form-label'>Tambahan " + val + "</label>  <input type='text' class='form-control' name='keterangan_" + val + "' autocomplete='off' placeholder='Keterangan'> </div> ";
+                                            document.getElementById('nominal').innerHTML += 
+                                                `<div class="form-group">
+                                                <label class="col-form-label">Nominal ${val}</label>
+                                                <input type="text" class="form-control" name="nominal${val}" data-inputmask="'alias': 'currency' " data-mask>
+                                                </div>`;
                                             const result = document.getElementById('nyoba');
+                                            const result2 = document.getElementById('tambah');
                                             result.value = result.value ? parseInt(result.value) + 1 : parseInt(val);
+                                            result2.value = result2.value ? parseInt(result2.value) + 1 : parseInt(val)
+                                            $(function() {
+
+                                            // format angka rupiah
+                                            $('[data-mask]').inputmask("currency", {
+                                            prefix: " Rp. ",
+                                            digitsOptional: true
+                                            })
+
+                                            // notifikasi allert sukses atau tidak
+                                            // <?php if ($status == 'sukses') { ?>
+                                            //     swal("Success!", "Berhasil menambah data rincian!", "success");
+                                            // <?php } else if ($status == 'gagal') { ?>
+                                            //     swal("Gagal!", "Gagal menambah data rincian!", "warning");
+                                            // <?php } else { ?>
+                                            // <?php } ?>
+
+                                            });
                                             // for (i = baru; i <= baru; i++) {
                                             //     if (i < baru) {
                                             //         document.getElementById("keterangan").innerHTML +=
