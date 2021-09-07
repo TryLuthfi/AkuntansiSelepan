@@ -128,11 +128,13 @@
                                     <label class="col-form-label">Tanggal :</label>
                                     <input type="date" value="<?php echo  $tgl ?>" class="form-control text-dark" name="tanggal" id="tgl1">
                                 </div>
-                                <div class="form-group" id="keterangan">
+                                <div class="form-group">
                                     <label class="col-form-label">Keterangan</label>
                                     <input type="text" class="form-control" name="keterangan_1" autocomplete="off" placeholder="Keterangan...">
                                 </div>
+                                <div id="keterangan">
 
+                                </div>
                                 <div class="form-group">
                                     <label class="col-form-label">Kode Akun (D)</label>
                                     <select name="debit" id="debit" class="form-control">
@@ -144,8 +146,11 @@
                                 </div>
                                 <!-- form untuk format rupiah -->
                                 <div class="form-group">
-                                    <label class="col-form-label">Nominal</label>
-                                    <input type="text" class="form-control" name="nominal" data-inputmask="'alias': 'currency' " data-mask>
+                                    <label class="col-form-label">Nominal (D)</label>
+                                    <input type="text" class="form-control" name="nominal_d" data-inputmask="'alias': 'currency' " data-mask>
+                                </div>
+                                <div id="nominal_d">
+
                                 </div>
                                 <div class="form-group">
                                     <label class="col-form-label">Kode Akun (K)</label>
@@ -156,12 +161,20 @@
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-form-label">Nominal (K)</label>
+                                    <input type="text" class="form-control" name="nominal_k" data-inputmask="'alias': 'currency' " data-mask>
+                                </div>
+                                <div id="nominal_k">
+
+                                </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
 
                                     <button type="submit" name="btnSubmit" class="btn btn-primary"><i class="fa fa-spinner fa-spin loading" style="display:none"></i> Simpan</button>
                                     <? $asu = 0; ?>
-                                    <button id="nyoba" type="button" onclick="addCode(this.value)" value="2"> TAMBAH FORM </button>
+                                    <button id="nyoba" type="button" onclick="addCode(this.value)" value="2"> Form Keterangan </button>
+                                    <button id="tambah" type="button" onclick="addNominal(this.value)" value="2">Form Nominal</button>
                                     <script>
                                         // var baru = $('nyoba').val();
 
@@ -169,7 +182,13 @@
 
                                             document.getElementById("keterangan").innerHTML +=
                                                 "<div class='form-group'> <label class='col-form-label'>Tambahan " + val + "</label>  <input type='text' class='form-control' name='keterangan_" + val + "' autocomplete='off' placeholder='Keterangan'> </div> ";
+                                            document.getElementById('nominal').innerHTML += 
+                                                `<div class="form-group">
+                                                <label class="col-form-label">Nominal ${val}</label>
+                                                <input type="text" class="form-control" name="nominal${val}" data-inputmask="'alias': 'currency' " data-mask>
+                                                </div>`;
                                             const result = document.getElementById('nyoba');
+                                            const result2 = document.getElementById('tambah');
                                             result.value = result.value ? parseInt(result.value) + 1 : parseInt(val);
                                             // for (i = baru; i <= baru; i++) {
                                             //     if (i < baru) {
@@ -180,6 +199,38 @@
                                             //             "<div class='form-group'> <label class='col-form-label'>lama</label>  <input type='text' class='form-control' name='" + i + "' autocomplete='off' placeholder='Keterangan'> </div> ";
                                             //     }
                                             // }
+                                        }
+
+                                        function addNominal(val) {
+                                            document.getElementById('nominal_d').innerHTML += 
+                                                `<div class="form-group">
+                                                <label class="col-form-label">Nominal (D) ${val}</label>
+                                                <input type="text" class="form-control" name="nominal_d${val}" data-inputmask="'alias': 'currency' " data-mask>
+                                                </div>`;
+                                            document.getElementById('nominal_k').innerHTML += 
+                                                `<div class="form-group">
+                                                <label class="col-form-label">Nominal (K) ${val}</label>
+                                                <input type="text" class="form-control" name="nominal_d${val}" data-inputmask="'alias': 'currency' " data-mask>
+                                                </div>`;
+                                                const result = document.getElementById('tambah');
+                                                result.value = result.value ? parseInt(result.value) + 1 : parseInt(val)
+                                            $(function() {
+
+                                            // format angka rupiah
+                                            $('[data-mask]').inputmask("currency", {
+                                            prefix: " Rp. ",
+                                            digitsOptional: true
+                                            })
+
+                                            // notifikasi allert sukses atau tidak
+                                            // <?php if ($status == 'sukses') { ?>
+                                            //     swal("Success!", "Berhasil menambah data rincian!", "success");
+                                            // <?php } else if ($status == 'gagal') { ?>
+                                            //     swal("Gagal!", "Gagal menambah data rincian!", "warning");
+                                            // <?php } else { ?>
+                                            // <?php } ?>
+
+                                            });
                                         }
                                     </script>
                                 </div>
