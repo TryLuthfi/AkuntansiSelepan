@@ -146,10 +146,10 @@
                                 </div>
                                 <!-- form untuk format rupiah -->
                                 <div class="form-group">
-                                    <label class="col-form-label">Nominal</label>
-                                    <input type="text" class="form-control" name="nominal" data-inputmask="'alias': 'currency' " data-mask>
+                                    <label class="col-form-label">Nominal (D)</label>
+                                    <input type="text" class="form-control" name="nominal_d" data-inputmask="'alias': 'currency' " data-mask>
                                 </div>
-                                <div id="nominal">
+                                <div id="nominal_d">
 
                                 </div>
                                 <div class="form-group">
@@ -161,13 +161,20 @@
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-form-label">Nominal (K)</label>
+                                    <input type="text" class="form-control" name="nominal_k" data-inputmask="'alias': 'currency' " data-mask>
+                                </div>
+                                <div id="nominal_k">
+
+                                </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
 
                                     <button type="submit" name="btnSubmit" class="btn btn-primary"><i class="fa fa-spinner fa-spin loading" style="display:none"></i> Simpan</button>
                                     <? $asu = 0; ?>
-                                    <button id="nyoba" type="button" onclick="addCode(this.value)" value="2"> TAMBAH FORM </button>
-                                    <!-- <button id="tambah" type="button" onclick="addNominal(this.value)" value="2">TAMBAH NOMINAL</button> -->
+                                    <button id="nyoba" type="button" onclick="addCode(this.value)" value="2"> Form Keterangan </button>
+                                    <button id="tambah" type="button" onclick="addNominal(this.value)" value="2">Form Nominal</button>
                                     <script>
                                         // var baru = $('nyoba').val();
 
@@ -183,7 +190,30 @@
                                             const result = document.getElementById('nyoba');
                                             const result2 = document.getElementById('tambah');
                                             result.value = result.value ? parseInt(result.value) + 1 : parseInt(val);
-                                            result2.value = result2.value ? parseInt(result2.value) + 1 : parseInt(val)
+                                            // for (i = baru; i <= baru; i++) {
+                                            //     if (i < baru) {
+                                            //         document.getElementById("keterangan").innerHTML +=
+                                            //             "<div class='form-group'> <label class='col-form-label'>baru</label>  <input type='text' class='form-control' name='nama_barang' autocomplete='off' placeholder='Keterangan'> </div> ";
+                                            //     } else {
+                                            //         document.getElementById("keterangan").innerHTML +=
+                                            //             "<div class='form-group'> <label class='col-form-label'>lama</label>  <input type='text' class='form-control' name='" + i + "' autocomplete='off' placeholder='Keterangan'> </div> ";
+                                            //     }
+                                            // }
+                                        }
+
+                                        function addNominal(val) {
+                                            document.getElementById('nominal_d').innerHTML += 
+                                                `<div class="form-group">
+                                                <label class="col-form-label">Nominal (D) ${val}</label>
+                                                <input type="text" class="form-control" name="nominal_d${val}" data-inputmask="'alias': 'currency' " data-mask>
+                                                </div>`;
+                                            document.getElementById('nominal_k').innerHTML += 
+                                                `<div class="form-group">
+                                                <label class="col-form-label">Nominal (K) ${val}</label>
+                                                <input type="text" class="form-control" name="nominal_d${val}" data-inputmask="'alias': 'currency' " data-mask>
+                                                </div>`;
+                                                const result = document.getElementById('tambah');
+                                                result.value = result.value ? parseInt(result.value) + 1 : parseInt(val)
                                             $(function() {
 
                                             // format angka rupiah
@@ -201,15 +231,6 @@
                                             // <?php } ?>
 
                                             });
-                                            // for (i = baru; i <= baru; i++) {
-                                            //     if (i < baru) {
-                                            //         document.getElementById("keterangan").innerHTML +=
-                                            //             "<div class='form-group'> <label class='col-form-label'>baru</label>  <input type='text' class='form-control' name='nama_barang' autocomplete='off' placeholder='Keterangan'> </div> ";
-                                            //     } else {
-                                            //         document.getElementById("keterangan").innerHTML +=
-                                            //             "<div class='form-group'> <label class='col-form-label'>lama</label>  <input type='text' class='form-control' name='" + i + "' autocomplete='off' placeholder='Keterangan'> </div> ";
-                                            //     }
-                                            // }
                                         }
                                     </script>
                                 </div>
