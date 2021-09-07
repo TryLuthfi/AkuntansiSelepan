@@ -9,6 +9,7 @@ class Rincian extends CI_Controller
         parent::__construct();
         $this->load->library('form_validation');
         $this->load->model('MRincian');
+        $this->load->model('MDetail');
     }
 
     public function index()
@@ -33,6 +34,20 @@ class Rincian extends CI_Controller
             return (strpos($value, 'keterangan_') !== false);
         }, ARRAY_FILTER_USE_KEY);
 
+        $anykre = array_filter($_POST, function ($value) {
+            return (strpos($value, 'kredit_') !== false);
+        }, ARRAY_FILTER_USE_KEY);
+
+        $jumlahKredit = 0;
+
+        $countanykre = array_filter($_POST, function ($value) {
+            return (strpos($value, 'nominal_d') !== false);
+        }, ARRAY_FILTER_USE_KEY);
+
+        foreach ($countanykre as $coun) {
+            $jumlahKredit += (int) filter_var($coun, FILTER_SANITIZE_NUMBER_INT);
+        }
+
         $anyket = join(',', $anyket);
 
         $last_data = $this->db->query('SELECT id_rincian FROM tb_rincian order by id_rincian DESC LIMIT 1');
@@ -47,7 +62,7 @@ class Rincian extends CI_Controller
         $tanggal_baru = explode("-", $tanggal);
         $kode_rincian = $tanggal_baru[2] . $tanggal_baru[1] . $tanggal_baru[0] . $hasil_data;
 
-        $nominal = filter_var($_POST['nominal'], FILTER_SANITIZE_NUMBER_INT);
+        $nominal = $jumlahKredit;
 
         $hasil_data = array(
             'kode_rincian' => $kode_rincian,
@@ -55,10 +70,24 @@ class Rincian extends CI_Controller
             'debit_rincian' => $_POST['debit'],
             'keterangan_rincian' => $anyket,
             'nominal_rincian' => $nominal,
-            'kredit_rincian' => $_POST['kredit']
+            'kredit_rincian' => join(',', $anykre)
         );
 
+        $listDetail = [];
+
+        $count = 0;
+        foreach ($anykre as $kre) {
+            $count += 1;
+            $listDetail[] = [
+                'kode_rincian' => $kode_rincian,
+                'kode' => $kre,
+                'type_op' => 'K',
+                'nominal' => (int) filter_var($_POST['nominal_d' . $count], FILTER_SANITIZE_NUMBER_INT)
+            ];
+        }
+
         $res = $this->MRincian->addPengeluaran($hasil_data);
+        $this->MDetail->add($listDetail);
 
         if ($res >= 1) {
             $this->session->set_flashdata('status', 'sukses');
@@ -72,7 +101,7 @@ class Rincian extends CI_Controller
     public function edit()
     {
 
-        $nominal = filter_var($_POST['nominal'], FILTER_SANITIZE_NUMBER_INT);
+        $nominal = filter_var($_POST['nominal_d'], FILTER_SANITIZE_NUMBER_INT);
 
         $data_array = array(
             'tanggal_rincian' => $_POST['tanggal'],

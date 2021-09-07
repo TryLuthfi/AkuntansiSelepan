@@ -3,9 +3,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class MDetail extends CI_Model
 {
-    public function inssert(array $input): array
+    public function add(array $input)
     {
-        return $this->db->insert('tb_detail_rincian', $input);
+        return $this->db->insert_batch('tb_detail_rincian', $input);
     }
 
     public function findKode(string $kode): array

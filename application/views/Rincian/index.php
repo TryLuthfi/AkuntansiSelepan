@@ -145,25 +145,28 @@
                                     </select>
                                 </div>
                                 <!-- form untuk format rupiah -->
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label class="col-form-label">Nominal (D)</label>
                                     <input type="text" class="form-control" name="nominal_d" data-inputmask="'alias': 'currency' " data-mask>
                                 </div>
                                 <div id="nominal_d">
 
-                                </div>
-                                <div class="form-group">
+                                </div> -->
+                                <div class="form-group" id="kredit_r">
                                     <label class="col-form-label">Kode Akun (K)</label>
-                                    <select name="kredit" id="kredit" class="form-control">
+                                    <select name="kredit_1" id="kredit" class="form-control">
                                         <option name="kode_kredit">Pilih Kode</option>
                                         <?php foreach ($kode_akun as $data) : ?>
                                             <option value="<?= $data['kode_akun'] ?>"><?= $data['nama_kode'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
+                                <div id="kredit_t">
+
+                                </div>
                                 <div class="form-group">
-                                    <label class="col-form-label">Nominal (K)</label>
-                                    <input type="text" class="form-control" name="nominal_k" data-inputmask="'alias': 'currency' " data-mask>
+                                    <label class="col-form-label">Nominal</label>
+                                    <input type="text" class="form-control" name="nominal_d1" data-inputmask="'alias': 'currency' " data-mask>
                                 </div>
                                 <div id="nominal_k">
 
@@ -182,7 +185,7 @@
 
                                             document.getElementById("keterangan").innerHTML +=
                                                 "<div class='form-group'> <label class='col-form-label'>Tambahan " + val + "</label>  <input type='text' class='form-control' name='keterangan_" + val + "' autocomplete='off' placeholder='Keterangan'> </div> ";
-                                            document.getElementById('nominal').innerHTML += 
+                                            document.getElementById('nominal').innerHTML +=
                                                 `<div class="form-group">
                                                 <label class="col-form-label">Nominal ${val}</label>
                                                 <input type="text" class="form-control" name="nominal${val}" data-inputmask="'alias': 'currency' " data-mask>
@@ -190,46 +193,26 @@
                                             const result = document.getElementById('nyoba');
                                             const result2 = document.getElementById('tambah');
                                             result.value = result.value ? parseInt(result.value) + 1 : parseInt(val);
-                                            // for (i = baru; i <= baru; i++) {
-                                            //     if (i < baru) {
-                                            //         document.getElementById("keterangan").innerHTML +=
-                                            //             "<div class='form-group'> <label class='col-form-label'>baru</label>  <input type='text' class='form-control' name='nama_barang' autocomplete='off' placeholder='Keterangan'> </div> ";
-                                            //     } else {
-                                            //         document.getElementById("keterangan").innerHTML +=
-                                            //             "<div class='form-group'> <label class='col-form-label'>lama</label>  <input type='text' class='form-control' name='" + i + "' autocomplete='off' placeholder='Keterangan'> </div> ";
-                                            //     }
-                                            // }
                                         }
 
                                         function addNominal(val) {
-                                            document.getElementById('nominal_d').innerHTML += 
-                                                `<div class="form-group">
-                                                <label class="col-form-label">Nominal (D) ${val}</label>
-                                                <input type="text" class="form-control" name="nominal_d${val}" data-inputmask="'alias': 'currency' " data-mask>
-                                                </div>`;
-                                            document.getElementById('nominal_k').innerHTML += 
+                                            document.getElementById('nominal_k').innerHTML +=
                                                 `<div class="form-group">
                                                 <label class="col-form-label">Nominal (K) ${val}</label>
                                                 <input type="text" class="form-control" name="nominal_d${val}" data-inputmask="'alias': 'currency' " data-mask>
                                                 </div>`;
-                                                const result = document.getElementById('tambah');
-                                                result.value = result.value ? parseInt(result.value) + 1 : parseInt(val)
+                                            const newEl = document.getElementById('kredit')
+                                            document.getElementById('kredit_t').appendChild(newEl.cloneNode(true))
+                                            const el = document.getElementsByName('kredit_1')
+                                            el[el.length - 1].setAttribute('name', 'kredit_' + val)
+                                            const result = document.getElementById('tambah');
+                                            result.value = result.value ? parseInt(result.value) + 1 : parseInt(val)
                                             $(function() {
-
-                                            // format angka rupiah
-                                            $('[data-mask]').inputmask("currency", {
-                                            prefix: " Rp. ",
-                                            digitsOptional: true
-                                            })
-
-                                            // notifikasi allert sukses atau tidak
-                                            // <?php if ($status == 'sukses') { ?>
-                                            //     swal("Success!", "Berhasil menambah data rincian!", "success");
-                                            // <?php } else if ($status == 'gagal') { ?>
-                                            //     swal("Gagal!", "Gagal menambah data rincian!", "warning");
-                                            // <?php } else { ?>
-                                            // <?php } ?>
-
+                                                // format angka rupiah
+                                                $('[data-mask]').inputmask("currency", {
+                                                    prefix: " Rp. ",
+                                                    digitsOptional: true
+                                                })
                                             });
                                         }
                                     </script>

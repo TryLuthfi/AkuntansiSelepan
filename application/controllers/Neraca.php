@@ -23,7 +23,7 @@ class Neraca extends CI_Controller
         }
         $piutanggaji = $this->MNeraca->getPiutangGaji();
         foreach ($piutanggaji as $row) {
-            $data['piutanggaji'] =  $row['jumlah'];
+            $data['piutanggaji'] = $row['jumlah'];
         }
         $piutangpenjualan = $this->MNeraca->getPiutangPenjualan();
         foreach ($piutangpenjualan as $row) {
