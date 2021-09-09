@@ -81,11 +81,11 @@
                                         <tr>
                                             <td><?= date("d M Y", strtotime($data['tanggal_rincian'])) ?></td>
                                             <td><?= $data['keterangan_rincian'] ?></td>
+                                            <td><?= $data['nama_kode'] ?></td>
                                             <td><?= $data['debit_rincian'] ?></td>
-                                            <td><?= $data['nama_debit'] ?></td>
                                             <td><?= $data['nominal_rincian'] ?></td>
                                             <td><?= $data['kredit_rincian'] ?></td>
-                                            <td><?= $data['nama_kredit'] ?></td>
+                                            <td><?= $data['kredit_rincian'] ?></td>
                                             <td>Rp. <?= number_format($data['nominal_rincian'], 0, ',', ',') ?></td>
                                             <td>
                                                 <a href="<?php echo base_url('Rincian/delete/') . $data['id_rincian'] ?>" class="btn btn-danger remove"><i class=" fas fa-trash"></i></a>

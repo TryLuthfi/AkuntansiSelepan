@@ -1,0 +1,15 @@
+<!-- <td><?= date("d M Y", strtotime($data['tanggal_rincian'])) ?></td> -->
+                                            <!-- <td><?= $data['keterangan_rincian'] ?></td> -->
+                                            <!-- <td><?= $data['debit_rincian'] ?></td> -->
+                                            <!-- <td><?= $data['nama_debit'] ?></td> -->
+                                            <!-- <td><?= $data['nominal_rincian'] ?></td> -->
+                                            <!-- <td><?= $data['kredit_rincian'] ?></td> -->
+                                            <!-- <td><?= $data['nama_kredit'] ?></td> -->
+                                            <!-- <td>Rp. <?= number_format($data['nominal_rincian'], 0, ',', ',') ?></td> -->
+                                            <!-- <td>
+                                                <a href="<?php echo base_url('Rincian/delete/') . $data['id_rincian'] ?>" class="btn btn-danger remove"><i class=" fas fa-trash"></i></a>
+                                                <a href="#" class="btn btn-warning" data-target="#modal-lg-edit<?php echo $data['id_rincian'] ?>" data-toggle="modal"><i class="fas fa-edit"></i></a>
+                                            </td> -->
+
+                                             <?php $total = $total + $data['nominal_rincian']; ?>
+                                             <th><?= number_format($total, 0, ',', '.') ?></th>
