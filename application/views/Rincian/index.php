@@ -161,12 +161,12 @@
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
-                                <div id="kredit_t">
-
-                                </div>
                                 <div class="form-group">
                                     <label class="col-form-label">Nominal</label>
                                     <input type="text" class="form-control" name="nominal_d1" data-inputmask="'alias': 'currency' " data-mask>
+                                </div>
+                                <div id="kredit_t">
+
                                 </div>
                                 <div id="nominal_k">
 
@@ -201,7 +201,7 @@
                                                 <label class="col-form-label">Nominal (K) ${val}</label>
                                                 <input type="text" class="form-control" name="nominal_d${val}" data-inputmask="'alias': 'currency' " data-mask>
                                                 </div>`;
-                                            const newEl = document.getElementById('kredit')
+                                            const newEl = document.getElementById('kredit_r')
                                             document.getElementById('kredit_t').appendChild(newEl.cloneNode(true))
                                             const el = document.getElementsByName('kredit_1')
                                             el[el.length - 1].setAttribute('name', 'kredit_' + val)
