@@ -68,14 +68,14 @@ class Rincian extends CI_Controller
 
         $nominal = $jumlahKredit;
 
-        // $hasil_data = array(
-        //     'kode_rincian' => $kode_rincian,
-        //     'tanggal_rincian' => $_POST['tanggal'],
-        //     'debit_rincian' => $_POST['debit'],
-        //     'keterangan_rincian' => $anyket,
-        //     'nominal_rincian' => $nominal,
-        //     'kredit_rincian' => join(',', $anykre)
-        // );
+        $hasil_data = array(
+            'kode_rincian' => $kode_rincian,
+            'tanggal_rincian' => $_POST['tanggal'],
+            'debit_rincian' => $_POST['debit'],
+            'keterangan_rincian' => $anyket,
+            'nominal_rincian' => $nominal,
+            'kredit_rincian' => join(',', $anykre)
+        );
 
         $listDetail = [];
 
@@ -98,7 +98,7 @@ class Rincian extends CI_Controller
             'nominal' => (int) filter_var($_POST['nominal_debit'], FILTER_SANITIZE_NUMBER_INT)
         ];
 
-        // $res = $this->MRincian->addPengeluaran($hasil_data);
+        $res = $this->MRincian->addPengeluaran($hasil_data);
         $res = $this->MDetail->add($listDetailDebit);
         $res = $this->MDetail->add($listDetail);
 
