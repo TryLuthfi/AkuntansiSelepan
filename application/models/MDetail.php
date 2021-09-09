@@ -13,6 +13,6 @@ class MDetail extends CI_Model
     public function findKode(array $kode)
     {
         $new = implode(',', $kode);
-        return $this->db->query("SELECT * FROM tb_detail_rincian JOIN tb_kode ON tb_detail_rincian.kode = tb_kode.kode_akun WHERE kode_rincian IN ({$new})")->result_array();
+        return $this->db->query("SELECT * FROM tb_detail_rincian JOIN tb_kode ON tb_detail_rincian.kode = tb_kode.kode_akun WHERE kode_rincian IN ({$new})  AND type_rincian = 'K'")->result_array();
     }
 }
