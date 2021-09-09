@@ -16,10 +16,35 @@ class Rincian extends CI_Controller
     {
         $now = date('Y-m-d');
 
+        $data = [];
+
         $data['title'] = 'Rincian';
         $data['judul'] = 'Rincian Hari Ini';
-        $data['rincian'] = $this->MRincian->getData();
         $data['kode_akun'] = $this->db->get('tb_kode')->result_array();
+
+        $real = $this->MRincian->getData();
+
+        $ids = array_column($real, 'kode_rincian');
+
+        if (count($ids) !== 0) {
+            $detail = $this->MDetail->findKode($ids);
+        } else {
+            $data['rincian'] = [];
+        }
+
+        foreach ($real as $map) {
+            $filter = $this->filter($detail, $map['kode_rincian']);
+            $data['rincian'][] = [
+                'detail' => $filter,
+                'id_rincian' => $map['id_rincian'],
+                'tanggal_rincian' => $map['tanggal_rincian'],
+                'keterangan_rincian' => $map['keterangan_rincian'],
+                'nama_kode' => $map['nama_kode'],
+                'debit_rincian' => $map['debit_rincian'],
+                'nominal_rincian' => $map['nominal_rincian'],
+                'kredit_rincian' => $map['kredit_rincian']
+            ];
+        }
 
         $this->load->view('Templates/01_Header', $data);
         $this->load->view('Templates/02_Menu');
@@ -28,12 +53,14 @@ class Rincian extends CI_Controller
         $this->load->view('Templates/99_JS');
     }
 
+    private function filter(array $data, $key)
+    {
+        return array_filter($data, fn ($value) => $value['kode_rincian'] === $key);
+    }
+
     public function add()
     {
 
-        // echo "<pre>";
-        // print_r($_POST);
-        // echo "</pre>";
         $anyket = array_filter($_POST, function ($value) {
             return (strpos($value, 'keterangan_') !== false);
         }, ARRAY_FILTER_USE_KEY);
