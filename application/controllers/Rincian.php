@@ -45,12 +45,12 @@ class Rincian extends CI_Controller
                 'kredit_rincian' => $map['kredit_rincian']
             ];
         }
+        // var_dump($ids);
+        // echo '=====================================================================';
+        // var_dump($data['rincian']);
 
         $this->load->view('Templates/01_Header', $data);
         $this->load->view('Templates/02_Menu');
-        // echo '<pre>';
-        // var_dump($data);
-        // echo '</pre>';
         $this->load->view('Rincian/Index', $data);
         $this->load->view('Templates/03_Footer');
         $this->load->view('Templates/99_JS');
@@ -58,7 +58,7 @@ class Rincian extends CI_Controller
 
     private function filter(array $data, $key)
     {
-        array_filter($data, function ($value) use ($key) {
+        return array_filter($data, function ($value) use ($key) {
             return $value['kode_rincian'] === $key;
         });
     }
