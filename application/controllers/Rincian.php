@@ -45,10 +45,6 @@ class Rincian extends CI_Controller
                 'kredit_rincian' => $map['kredit_rincian']
             ];
         }
-        // var_dump($ids);
-        // echo '=====================================================================';
-        // var_dump($data['rincian']);
-
         $this->load->view('Templates/01_Header', $data);
         $this->load->view('Templates/02_Menu');
         $this->load->view('Rincian/Index', $data);
@@ -65,6 +61,10 @@ class Rincian extends CI_Controller
 
     public function add()
     {
+
+        // echo '<pre>';
+        // print_r($_POST);
+        // echo '</pre>';
 
         $anyket = array_filter($_POST, function ($value) {
             return (strpos($value, 'keterangan_') !== false);
@@ -112,14 +112,16 @@ class Rincian extends CI_Controller
         $listDetail = [];
 
         $count = 0;
+        $total = 0;
         foreach ($anykre as $kre) {
             $count += 1;
             $listDetail[] = [
                 'kode_rincian' => $kode_rincian,
                 'kode' => $kre,
                 'type_rincian' => 'K',
-                'nominal' => (int) filter_var($_POST['nominal_' . $count], FILTER_SANITIZE_NUMBER_INT)
+                'nominal' => (int) filter_var($_POST['nominal_d' . $count], FILTER_SANITIZE_NUMBER_INT)
             ];
+            $total = $total + (int) filter_var($_POST['nominal_d' . $count], FILTER_SANITIZE_NUMBER_INT);
         }
 
         $listDetailDebit = [];
@@ -127,7 +129,7 @@ class Rincian extends CI_Controller
             'kode_rincian' => $kode_rincian,
             'kode' => $_POST['debit'],
             'type_rincian' => 'D',
-            'nominal' => (int) filter_var($_POST['nominal_debit'], FILTER_SANITIZE_NUMBER_INT)
+            'nominal' => $total
         ];
 
         $res = $this->MRincian->addPengeluaran($hasil_data);
