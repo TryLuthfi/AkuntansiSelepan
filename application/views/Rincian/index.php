@@ -66,11 +66,11 @@
                                     <tr>
                                         <th>Tanggal</th>
                                         <th>Keterangan</th>
-                                        <th>Kode Debit</th>
-                                        <th>Nama Debit</th>
+                                        <th>Kode (D)</th>
+                                        <th>Nama (D)</th>
                                         <th>Nominal</th>
-                                        <th>Kode Kredit</th>
-                                        <th>Nama Kredit</th>
+                                        <th>Kode (K)</th>
+                                        <th>Nama (K)</th>
                                         <th>Nominal</th>
                                         <th>Action</th>
                                     </tr>
@@ -83,7 +83,7 @@
                                             <td><?= $data['keterangan_rincian'] ?></td>
                                             <td><?= $data['debit_rincian'] ?></td>
                                             <td><?= $data['nama_kode'] ?></td>
-                                            <td><?= $data['nominal_rincian'] ?></td>
+                                            <td>Rp. <?= number_format($data['nominal_rincian'], 0, ',', ',') ?></td>
                                             <td><?php
                                                 foreach ($data['detail'] as $item) {
                                                     echo '<li>' . $item['kode'] . '</li>';
@@ -94,7 +94,11 @@
                                                     echo '<li>' . $item['nama_kode'] . '</li>';
                                                 }
                                                 ?></td>
-                                            <td>Rp. <?= number_format($data['nominal_rincian'], 0, ',', ',') ?></td>
+                                            <td><?php
+                                                foreach ($data['detail'] as $item) {
+                                                    echo '<li> Rp. ' . number_format($item['nominal'], 0, ',', ',') . '</li>';
+                                                }
+                                                ?></td>
                                             <td>
                                                 <a href="<?php echo base_url('Rincian/delete/') . $data['id_rincian'] ?>" class="btn btn-danger remove"><i class=" fas fa-trash"></i></a>
                                                 <a href="#" class="btn btn-warning" data-target="#modal-lg-edit<?php echo $data['id_rincian'] ?>" data-toggle="modal"><i class="fas fa-edit"></i></a>

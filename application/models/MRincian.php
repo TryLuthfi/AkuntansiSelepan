@@ -31,7 +31,7 @@ class MRincian extends CI_Model
 
     public function getData()
     {
-        $data = $this->db->query('SELECT * FROM tb_rincian JOIN tb_kode ON tb_rincian.debit_rincian = tb_kode.kode_akun')->result_array();
+        $data = $this->db->query('SELECT * FROM tb_rincian JOIN tb_kode ON tb_rincian.debit_rincian = tb_kode.kode_akun ORDER BY id_rincian DESC')->result_array();
         return $data;
     }
 
