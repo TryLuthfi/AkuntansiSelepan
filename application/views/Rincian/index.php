@@ -100,7 +100,7 @@
                                                 }
                                                 ?></td>
                                             <td>
-                                                <a href="<?php echo base_url('Rincian/delete/') . $data['id_rincian'] ?>" class="btn btn-danger remove"><i class=" fas fa-trash"></i></a>
+                                                <a href="<?php echo base_url('Rincian/delete/') . $data['kode_rincian'] ?>" class="btn btn-danger remove"><i class=" fas fa-trash"></i></a>
                                                 <a href="#" class="btn btn-warning" data-target="#modal-lg-edit<?php echo $data['id_rincian'] ?>" data-toggle="modal"><i class="fas fa-edit"></i></a>
                                             </td>
                                         </tr>
@@ -346,12 +346,12 @@
         })
 
         // notifikasi allert sukses atau tidak
-        // <?php if ($status == 'sukses') { ?>
-        //     swal("Success!", "Berhasil menambah data rincian!", "success");
-        // <?php } else if ($status == 'gagal') { ?>
-        //     swal("Gagal!", "Gagal menambah data rincian!", "warning");
-        // <?php } else { ?>
-        // <?php } ?>
+        <?php if ($status == 'sukses') { ?>
+            swal("Success!", "Berhasil menambah data rincian!", "success");
+        <?php } else if ($status == 'gagal') { ?>
+            swal("Gagal!", "Gagal menambah data rincian!", "warning");
+        <?php } else { ?>
+        <?php } ?>
 
     });
 </script>

@@ -47,6 +47,12 @@ class MRincian extends CI_Model
         return $res;
     }
 
+    public function deleteDataDetail($id)
+    {
+        $res = $this->db->delete("tb_detail_rincian", $id);
+        return $res;
+    }
+
     public function updateData($data_array, $id)
     {
         $res = $this->db->update("tb_rincian", $data_array, $id);

@@ -36,6 +36,7 @@ class Rincian extends CI_Controller
             $filter = $this->filter($detail, $map['kode_rincian']);
             $data['rincian'][] = [
                 'detail' => $filter,
+                'kode_rincian' => $map['kode_rincian'],
                 'id_rincian' => $map['id_rincian'],
                 'tanggal_rincian' => $map['tanggal_rincian'],
                 'keterangan_rincian' => $map['keterangan_rincian'],
@@ -174,8 +175,9 @@ class Rincian extends CI_Controller
 
     public function delete($id)
     {
-        $id_barang = array('id_rincian' => $id);
-        $res = $this->MRincian->deleteData($id_barang);
+        $kode_rincian = array('kode_rincian' => $id);
+        $res = $this->MRincian->deleteData($kode_rincian);
+        $this->MRincian->deleteDataDetail($kode_rincian);
 
         if ($res >= 1) {
             $this->session->set_flashdata('status', 'sukses');
