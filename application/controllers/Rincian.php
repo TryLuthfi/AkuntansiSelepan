@@ -116,22 +116,15 @@ class Rincian extends CI_Controller
             $count += 1;
             $listDetail[] = [
                 'kode_rincian' => $kode_rincian,
+                'tanggal_rincian' => $_POST['tanggal'],
                 'kode' => $kre,
                 'type_rincian' => 'K',
-                'nominal' => (int) filter_var($_POST['nominal_d' . $count], FILTER_SANITIZE_NUMBER_INT)
+                'nominal' => (int) filter_var($_POST['nominal_d' . $count], FILTER_SANITIZE_NUMBER_INT),
+                'keterangan' => $count
             ];
         }
 
-        $listDetailDebit = [];
-        $listDetailDebit[] = [
-            'kode_rincian' => $kode_rincian,
-            'kode' => $_POST['debit'],
-            'type_rincian' => 'D',
-            'nominal' => (int) filter_var($_POST['nominal_debit'], FILTER_SANITIZE_NUMBER_INT)
-        ];
-
         $res = $this->MRincian->addPengeluaran($hasil_data);
-        $res = $this->MDetail->add($listDetailDebit);
         $res = $this->MDetail->add($listDetail);
 
         if ($res >= 1) {
@@ -145,21 +138,56 @@ class Rincian extends CI_Controller
 
     public function edit()
     {
+        // echo '<pre>';
+        // print_r($_POST);
+        // echo '</pre>';
 
-        $nominal = filter_var($_POST['nominal_d'], FILTER_SANITIZE_NUMBER_INT);
+        $anykre = array_filter($_POST, function ($value) {
+            return (strpos($value, 'kredit_') !== false);
+        }, ARRAY_FILTER_USE_KEY);
+
+        $anynom = array_filter(
+            $_POST,
+            function ($value) {
+                return (strpos($value, 'nominal_') !== false);
+            },
+            ARRAY_FILTER_USE_KEY
+        );
+
+        $jumlahKredit = 0;
+        foreach ($anynom as $coun) {
+            $jumlahKredit += (int) filter_var($coun, FILTER_SANITIZE_NUMBER_INT);
+        }
 
         $data_array = array(
             'tanggal_rincian' => $_POST['tanggal'],
             'debit_rincian' => $_POST['debit'],
-            'keterangan_rincian' => $_POST['nama_barang'],
-            'nominal_rincian' => $nominal,
-            'kredit_rincian' => $_POST['kredit']
+            'keterangan_rincian' => $_POST['keterangan'],
+            'nominal_rincian' => $jumlahKredit,
+            'kredit_rincian' => join(',', $anykre)
         );
 
-        $where = array('id_rincian' => $_POST['id_barang']);
+        $where = array('id_rincian' => $_POST['id_rincian']);
 
         $res = $this->MRincian->updateData($data_array, $where);
 
+        $listDetail = [];
+
+        $count = 0;
+        foreach ($anykre as $kre) {
+            $count += 1;
+            $listDetail[] = [
+                'tanggal_rincian' => $_POST['tanggal'],
+                'kode' => $kre,
+                'type_rincian' => 'K',
+                'nominal' => (int) filter_var($_POST['nominal_' . $count], FILTER_SANITIZE_NUMBER_INT)
+            ];
+
+            $where2 = array(
+                'kode_rincian' => $_POST['kode_rincian']
+            );
+            $res = $this->MRincian->updateDataDetail($listDetail, $where2, $count);
+        }
         if ($res >= 1) {
             $this->session->set_flashdata('status', 'sukses');
             redirect("Rincian");

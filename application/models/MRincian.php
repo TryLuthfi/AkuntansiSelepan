@@ -58,4 +58,12 @@ class MRincian extends CI_Model
         $res = $this->db->update("tb_rincian", $data_array, $id);
         return $res;
     }
+
+    public function updateDataDetail($data_array, $id, $count)
+    {
+        $this->db->where('keterangan', $count);
+        $this->db->update_batch('tb_detail_rincian', $data_array, $id);
+        // $res = $this->db->update_batch("tb_detail_rincian", $data_array, $id);
+        // return $res;
+    }
 }

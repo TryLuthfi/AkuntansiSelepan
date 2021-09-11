@@ -156,14 +156,6 @@
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
-                                <!-- form untuk format rupiah -->
-                                <!-- <div class="form-group">
-                                    <label class="col-form-label">Nominal (D)</label>
-                                    <input type="text" class="form-control" name="nominal_d" data-inputmask="'alias': 'currency' " data-mask>
-                                </div>
-                                <div id="nominal_d">
-
-                                </div> -->
                                 <div class="form-group" id="kredit_r">
                                     <label class="col-form-label">Kode Akun (K)</label>
                                     <select name="kredit_1" id="kredit" class="form-control">
@@ -188,25 +180,8 @@
 
                                     <button type="submit" name="btnSubmit" class="btn btn-primary"><i class="fa fa-spinner fa-spin loading" style="display:none"></i> Simpan</button>
                                     <? $asu = 0; ?>
-                                    <button id="nyoba" type="button" onclick="addCode(this.value)" value="2"> Form Keterangan </button>
                                     <button id="tambah" type="button" onclick="addNominal(this.value)" value="2">Form Nominal</button>
                                     <script>
-                                        // var baru = $('nyoba').val();
-
-                                        function addCode(val) {
-
-                                            document.getElementById("keterangan").innerHTML +=
-                                                "<div class='form-group'> <label class='col-form-label'>Tambahan " + val + "</label>  <input type='text' class='form-control' name='keterangan_" + val + "' autocomplete='off' placeholder='Keterangan'> </div> ";
-                                            document.getElementById('nominal').innerHTML +=
-                                                `<div class="form-group">
-                                                <label class="col-form-label">Nominal ${val}</label>
-                                                <input type="text" class="form-control" name="nominal${val}" data-inputmask="'alias': 'currency' " data-mask>
-                                                </div>`;
-                                            const result = document.getElementById('nyoba');
-                                            const result2 = document.getElementById('tambah');
-                                            result.value = result.value ? parseInt(result.value) + 1 : parseInt(val);
-                                        }
-
                                         function addNominal(val) {
                                             document.getElementById('nominal_k').innerHTML +=
                                                 `<div class="form-group">
@@ -253,14 +228,15 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <input type="hidden" name="id_barang" value="<?= $data['id_rincian'] ?>">
+                                    <input type="hidden" name="id_rincian" value="<?= $data['id_rincian'] ?>">
+                                    <input type="hidden" name="kode_rincian" value="<?= $data['kode_rincian'] ?>">
                                     <div class="form-group">
                                         <label class="col-form-label">Tanggal :</label>
                                         <input type="date" value="<?= date("Y-m-d", strtotime($data['tanggal_rincian'])) ?>" class=" form-control text-dark" name="tanggal" id="tgl1">
                                     </div>
                                     <div class="form-group">
                                         <label class="col-form-label">Keterangan</label>
-                                        <input type="text" class="form-control" name="nama_barang" autocomplete="off" value="<?= $data['keterangan_rincian'] ?>">
+                                        <input type="text" class="form-control" name="keterangan" autocomplete="off" value="<?= $data['keterangan_rincian'] ?>">
                                     </div>
                                     <div class="form-group">
                                         <label class="col-form-label">Kode Akun (D)</label>
@@ -273,21 +249,31 @@
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-form-label">Nominal</label>
-                                        <input type="text" class="form-control" name="nominal" value="<?= $data['nominal_rincian'] ?>" data-inputmask="'alias': 'currency' " data-mask>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-form-label">Kode Akun (K)</label>
-                                        <select name="kredit" id="kredit_edit" class="form-control">
-                                            <option name="kode_kredit">Pilih Kode</option>
-                                            <?php foreach ($kode_akun as $data2) : ?>
-                                                <option <?php if ($data2['kode_akun'] == $data['kredit_rincian']) {
-                                                            echo 'selected="selected"';
-                                                        } ?> value="<?php echo $data2['kode_akun'] ?>"><?php echo $data2['nama_kode'] ?> </option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
+
+                                    <?php $kode = 0;
+                                    foreach ($data['detail'] as $item) {
+                                        $kode++;
+                                    ?><div class="form-group">
+                                            <label class="col-form-label">Kode Akun (K) <?= $kode ?></label>
+                                            <select name="kredit <?= $kode ?>" id="kredit_edit" class="form-control">
+                                                <option name="kode_kredit">Pilih Kode</option>
+                                                <?php foreach ($kode_akun as $data2) :  ?>
+                                                    <option <?php if ($data2['kode_akun'] == $data['kredit_rincian'] || $data2['nama_kode'] == $item['nama_kode']) {
+                                                                echo 'selected="selected"';
+                                                            } ?> value="<?php echo $data2['kode_akun'] ?>"><?php echo $data2['nama_kode'] ?> </option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                    <?php } ?>
+                                    <?php $nominal = 0;
+                                    foreach ($data['detail'] as $item) {
+                                        $nominal++;
+                                    ?> <div class="form-group">
+                                            <label class="col-form-label">Nominal (K) <?= $nominal ?></label>
+                                            <input type="text" class="form-control" name="nominal <?= $nominal ?>" .$nominal value="<?= $item['nominal'] ?>" data-inputmask="'alias': 'currency' " data-mask>
+                                        </div>
+                                    <?php } ?>
+
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
 
