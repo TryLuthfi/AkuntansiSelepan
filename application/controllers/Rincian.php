@@ -62,9 +62,10 @@ class Rincian extends CI_Controller
     public function add()
     {
 
-        // echo '<pre>';
+
+        // echo '<presdsd>';
         // print_r($_POST);
-        // echo '</pre>';
+        // echo '</presdsd>';
 
         $anyket = array_filter($_POST, function ($value) {
             return (strpos($value, 'keterangan_') !== false);
