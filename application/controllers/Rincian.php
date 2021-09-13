@@ -173,21 +173,22 @@ class Rincian extends CI_Controller
 
         $listDetail = [];
 
+        $id = explode(',', $_POST['id_detail']);
+
         $count = 0;
         foreach ($anykre as $kre) {
             $count += 1;
             $listDetail[] = [
-                'tanggal_rincian' => $_POST['tanggal'],
+                // 'tanggal_rincian' => $_POST['tanggal'],
+                'id_dr' => $id[$count - 1],
                 'kode' => $kre,
                 'type_rincian' => 'K',
                 'nominal' => (int) filter_var($_POST['nominal_' . $count], FILTER_SANITIZE_NUMBER_INT)
             ];
-
-            $where2 = array(
-                'kode_rincian' => $_POST['kode_rincian']
-            );
-            $res = $this->MRincian->updateDataDetail($listDetail, $where2, $count);
         }
+
+        $res = $this->MRincian->updateDataDetail($listDetail);
+
         if ($res >= 1) {
             $this->session->set_flashdata('status', 'sukses');
             redirect("Rincian");

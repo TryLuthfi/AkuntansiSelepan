@@ -228,6 +228,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
+                                    <input type="hidden" name="id_detail" value="<?= join(',', array_column($data['detail'], 'id_dr')) ?>">
                                     <input type="hidden" name="id_rincian" value="<?= $data['id_rincian'] ?>">
                                     <input type="hidden" name="kode_rincian" value="<?= $data['kode_rincian'] ?>">
                                     <div class="form-group">
